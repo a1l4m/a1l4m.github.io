@@ -33,7 +33,7 @@ const gridData = [
       "Difficulty: Hard",
     ],
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/kikipass-7d6e11a95b",
+    buttonLink: "https://blueteamlabs.online/home/investigation/krank-d14513a65f",
     isVIP: true,
   },{
     imageSrc: "./images/KikiPass.png",
