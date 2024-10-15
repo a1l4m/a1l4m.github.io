@@ -6,6 +6,7 @@ const gridData = [
       "Published On: BlueTeamLabs",
       "Type: DFIR",
       "OS: Windows",
+      "Occasion: Trick or Threat. Halloween event,  
       "Difficulty: Hard",
     ],
     buttonText: "Try The Lab",
