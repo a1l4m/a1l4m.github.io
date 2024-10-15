@@ -1,4 +1,17 @@
 const gridData = [
+    {
+    imageSrc: "./images/Masquerade.png",
+    title: "Masquerade Halloween '24",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/krank-d14513a65f",
+    isVIP: true,
+  },
   {
     imageSrc: "./images/nuts.png",
     title: "Nuts",
