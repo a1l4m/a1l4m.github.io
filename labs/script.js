@@ -3,10 +3,9 @@ const gridData = [
     imageSrc: "./images/Masquerade.png",
     title: "Masquerade Halloween '24",
     details: [
-      "Published On: BlueTeamLabs",
+      "Published On: BlueTeamLabs [Trick or Threat. Halloween event]",
       "Type: DFIR",
       "OS: Windows",
-      "Occasion: Trick or Threat. Halloween event,  
       "Difficulty: Hard",
     ],
     buttonText: "Try The Lab",
