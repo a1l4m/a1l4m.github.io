@@ -4,7 +4,7 @@ const gridData = [
     title: "Masquerade Halloween '24",
     details: [
       "Published On: BlueTeamLabs [Trick or Threat event]",
-      "Type: DFIR (Endpoint + Memory)",
+      "Type: DFIR - Endpoint & Memory",
       "OS: Windows",
       "Difficulty: Hard",
     ],
@@ -17,7 +17,7 @@ const gridData = [
     title: "Nuts",
     details: [
       "Published On: HackTheBox",
-      "Type: DFIR (Endpoint)",
+      "Type: DFIR - Endpoint",
       "OS: Windows",
       "Difficulty: Medium",
     ],
@@ -41,7 +41,7 @@ const gridData = [
     title: "BTLO-Krank",
     details: [
       "Published On: BlueTeamLabs",
-      "Type: DFIR (Endpoint)",
+      "Type: DFIR - Endpoint",
       "OS: MAC",
       "Difficulty: Hard",
     ],
@@ -53,7 +53,7 @@ const gridData = [
     title: "KikiPass",
     details: [
       "Published On: BlueTeamLabs",
-      "Type: DFIR (Memory)",
+      "Type: DFIR - Memory",
       "OS: Windows",
       "Difficulty: Medium",
     ],
