@@ -9,7 +9,7 @@ const gridData = [
       "Difficulty: Hard",
     ],
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/krank-d14513a65f",
+    buttonLink: "https://blueteamlabs.online/home/investigation/masquerade-d41fa429f3",
     isVIP: true,
   },
   {
