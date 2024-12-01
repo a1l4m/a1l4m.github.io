@@ -1,0 +1,66 @@
+/* Remove the left sidebar */
+.md-sidebar--primary {
+    display: none !important;
+}
+
+/* Center-align content and expand width */
+.md-main {
+    margin: 0 auto;
+    max-width: 100%; /* Expand content to fill the page */
+    padding: 20px;
+}
+
+/* Remove the navbar */
+.md-header {
+    display: none !important;
+}
+
+/* Page background and text color adjustments */
+body {
+    background-color: #1d1e20 !important; /* Dark background to match site */
+    color: #dadadb !important; /* Text color to match site */
+}
+
+/* Remove the footer */
+.md-footer {
+    display: none !important;
+}
+
+
+}
+
+/* Table styling */
+.md-typeset table {
+    background-color: #282a2d !important; /* Dark table background */
+    color: #dadadb !important; /* Light text */
+    border: 1px solid #dadadb !important; /* Light border */
+}
+
+.md-typeset table th, .md-typeset table td {
+    border: 1px solid #dadadb !important; /* Border between cells */
+    padding: 8px; /* Add some padding */
+}
+
+
+
+/* General padding and spacing adjustments for a cleaner look */
+.md-typeset {
+    line-height: 1.6; /* Improve readability */
+    padding: 20px; /* Add padding around content */
+}
+
+
+
+
+/* Table of contents styling */
+.md-sidebar--secondary .md-nav__title {
+    background-color: #1d1e20 !important; /* Match the site background color */
+    color: #dadadb !important; /* Keep the text color consistent */
+	box-shadow: #1d1e20 !important; /* Remove any shadow */
+}
+/* Adjust the padding and spacing for cleaner alignment */
+.md-sidebar--secondary .md-nav__title {
+    padding: 0 !important; /* Remove extra padding */
+    margin-bottom: 10px; /* Add a little space below the title */
+}
+
