@@ -817,6 +817,15 @@
 
 
 <h1 id="using-emulated-linux-environments-as-an-anti-forensics-technique">Using Emulated Linux Environments as an Anti-Forensics technique</h1>
+<p class="meta-info">
+    December 1, 2024 &bull; 28 min read &bull; a1l4m
+</p>
+<style>.meta-info {
+    font-size: 0.8rem; /* Font size for better readability */
+    color: #8e8e8e; /* Gray color for metadata */
+    margin: 0px 0 20px; /* Spacing around the metadata */
+}
+</style>
 <p>Most anti-forensics techniques I encounter revolve around deletion—be it event logs, shadow copies, artifacts, or even traces like the tools and scripts used. While these methods are concerning, their impact is mitigated by centralized logging solutions like SIEM or SOAR, which store this information in real-time, allowing investigators to recover and analyze the logs.</p>
 <p>But what about techniques that don’t rely on deletion at all? Instead, they aim to prevent the generation of logs in the first place. These methods create blind spots—elusive areas that evade detection by EDRs, SIEMs, or even manual artifact analysis.</p>
 <p>Today, we’ll explore how virtualization, specifically using QEMU, can create such blind spots for existing solutions. This discussion will address both perspectives: how attackers can use virtualization to stage malware and how forensic investigators can detect and analyze these activities.</p>
