@@ -1028,7 +1028,7 @@ For better OPSEC, clear the command history by deleting <code>.ash_history</code
 <p>An attempt was made to extract the content of the link file from the MFT; however, the file was not found. This absence was attributed to the size of the link file exceeding <code>1KB</code>.</p>
 <div class="admonition info">
 <p class="admonition-title">Info</p>
-<p>The <code>$MFT</code> attribute file only retains actual file data if the size is <code>1024</code> bytes or smaller (resident data). For files larger than <code>1KB</code>, the data becomes non-resident and is not stored in the MFT itself, though data runs to the file’s location are recorded. </p>
+<p>The <code>$MFT</code> attribute file only retains actual file data if the size is <code>745</code> bytes or smaller (resident data). For files larger than <code>745B</code>, the data becomes non-resident and is not stored in the MFT itself, though data runs to the file’s location are recorded. </p>
 </div>
 <p>Prefetch files were parsed for processes executed around the identified time to analyze activities following the link file’s activation.</p>
 <p><img alt="Powershell First Prefetch" src="img/prefetchFirst.png" /></p>
