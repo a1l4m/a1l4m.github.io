@@ -278,6 +278,11 @@ canvas#canvas {
 
 }
 
+.girgis-card ul li:last-child {
+  color: #6c757d;
+  font-size: 0.9em;
+  font-style: italic;
+}
 
 @keyframes heartbeat {
     0% {
