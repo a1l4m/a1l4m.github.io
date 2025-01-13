@@ -1,5 +1,18 @@
 const gridData = [
     {
+    imageSrc: "./images/Boomer.png",
+    title: "Boomer",
+    details: [
+      "Published On: CyberDefenders",
+      "Type: DFIR - Endpoint & Memory",
+      "OS: Windows",
+      "Difficulty: Insane",
+    ],
+    buttonText: "Try The Lab",
+    buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/boomer",
+    isVIP: true,
+  },
+    {
     imageSrc: "./images/Masquerade.png",
     title: "Masquerade Halloween '24",
     details: [
@@ -169,6 +182,8 @@ function getDifficultyClass(difficulty) {
       return 'difficulty-hard';
     case 'Beginner':
       return 'difficulty-beginner';
+    case 'Insane':
+      return 'difficulty-insane';  
     default:
       return '';
   }
