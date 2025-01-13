@@ -269,6 +269,13 @@ svg {
   font-weight: bold;
 }
 
+/* Style for the published date */
+.published-date {
+  color: #9aa0a6;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
 canvas#canvas {
   display: block;
 }
@@ -278,11 +285,6 @@ canvas#canvas {
 
 }
 
-.girgis-card ul li:last-child {
-  color: #6c757d;
-  font-size: 0.9em;
-  font-style: italic;
-}
 
 @keyframes heartbeat {
     0% {

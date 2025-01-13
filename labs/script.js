@@ -1,6 +1,6 @@
 const gridData = [
     {
-    imageSrc: "./images/Boomer.png",
+	imageSrc: "./images/Boomer.png",
     title: "Boomer",
     details: [
       "Published On: CyberDefenders",
@@ -8,11 +8,11 @@ const gridData = [
       "OS: Windows",
       "Difficulty: Insane",
     ],
+	publishedDate: "13 Jan 2025",
     buttonText: "Try The Lab",
     buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/boomer",
     isVIP: true,
-  },
-    {
+  },{
     imageSrc: "./images/Masquerade.png",
     title: "Masquerade Halloween '24",
     details: [
@@ -21,6 +21,7 @@ const gridData = [
       "OS: Windows",
       "Difficulty: Hard",
     ],
+	publishedDate: "18 Oct 2024",
     buttonText: "Try The Lab",
     buttonLink: "https://blueteamlabs.online/home/investigation/masquerade-d41fa429f3",
     isVIP: true,
@@ -34,6 +35,7 @@ const gridData = [
       "OS: Windows",
       "Difficulty: Medium",
     ],
+	publishedDate: "12 Sep 2024",
     buttonText: "Try The Lab",
     buttonLink: "https://app.hackthebox.com/sherlocks/Nuts",
     isVIP: false,
@@ -46,6 +48,7 @@ const gridData = [
       "OS: Windows",
       "Difficulty: Hard",
     ],
+	publishedDate: "16 Feb 2024",
     buttonText: "Try The Lab",
     buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/spottedinthewild/",
     isVIP: false,
@@ -58,6 +61,7 @@ const gridData = [
       "OS: MAC",
       "Difficulty: Hard",
     ],
+	publishedDate: "30 Aug 2024",
     buttonText: "Try The Lab",
     buttonLink: "https://blueteamlabs.online/home/investigation/krank-d14513a65f",
     isVIP: true,
@@ -70,6 +74,7 @@ const gridData = [
       "OS: Windows",
       "Difficulty: Medium",
     ],
+	publishedDate: "16 Feb 2024",
     buttonText: "Try The Lab",
     buttonLink: "https://blueteamlabs.online/home/investigation/kikipass-7d6e11a95b",
     isVIP: true,
@@ -82,6 +87,7 @@ const gridData = [
       "OS: Linux",
       "Difficulty: Medium",
     ],
+	publishedDate: "8 July 2024",
     buttonText: "Try The Lab",
     buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/jetbrains/",
     isVIP: true,
@@ -94,6 +100,7 @@ const gridData = [
       "OS: Windows",
       "Difficulty: Medium",
     ],
+	publishedDate: "8 Mar 2024",
     buttonText: "Try The Lab",
     buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/malicious-pypi/",
     isVIP: true,
@@ -106,6 +113,7 @@ const gridData = [
       "OS: Linux",
       "Difficulty: Medium",
     ],
+	publishedDate: "23 Feb 2024",
     buttonText: "Try The Lab",
     buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/confluencerce/",
     isVIP: true,
@@ -128,21 +136,16 @@ function renderGridItems(page) {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
-function renderGridItems(page) {
-  gridContainer.innerHTML = ""; // Clear existing grid items
-
-  const startIndex = (page - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
   gridData.slice(startIndex, endIndex).forEach((item) => {
     const card = document.createElement("a");
     card.setAttribute("href", item.buttonLink);
-    card.setAttribute("target", "_blank");  // Add this line
+    card.setAttribute("target", "_blank");
     card.classList.add("girgis-card");
 
     if (item.isVIP) {
       card.classList.add("vip");
     }
+
     const image = document.createElement("img");
     image.setAttribute("src", item.imageSrc);
     image.setAttribute("alt", "");
@@ -156,13 +159,19 @@ function renderGridItems(page) {
       listItem.textContent = detail;
       if (detail.includes("Difficulty:")) {
         const detailParts = detail.split(":");
-        const difficultyLevel = detailParts[1].trim(); // Get the difficulty level text
+        const difficultyLevel = detailParts[1].trim();
         listItem.innerHTML = `${detailParts[0]}: <span class="${getDifficultyClass(difficultyLevel)}">${difficultyLevel}</span>`;
       } else {
         listItem.textContent = detail;
       }
       detailsList.appendChild(listItem);
     });
+
+    // Add the publish date to the details list
+    const dateListItem = document.createElement("li");
+    dateListItem.textContent = `Released on: ${item.publishedDate}`;
+    dateListItem.classList.add("published-date"); // Add a class for styling
+    detailsList.appendChild(dateListItem);
 
     const button = document.createElement("button");
     button.textContent = item.buttonText;
@@ -189,7 +198,7 @@ function getDifficultyClass(difficulty) {
       return 'difficulty-hard';
     case 'Beginner':
       return 'difficulty-beginner';
-    case 'Insane':
+	case 'Insane':
       return 'difficulty-insane';  
     default:
       return '';
