@@ -9,7 +9,6 @@ const gridData = [
       "Difficulty: Insane",
     ],
     buttonText: "Try The Lab",
-    publishedDate: "2025-01-13", 
     buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/boomer",
     isVIP: true,
   },
