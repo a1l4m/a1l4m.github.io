@@ -264,6 +264,11 @@ svg {
   font-weight: bold;
 }
 
+.difficulty-insane {
+  color: #ff0000;   /* Bright red color */
+  font-weight: bold;
+}
+
 canvas#canvas {
   display: block;
 }
