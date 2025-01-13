@@ -9,6 +9,7 @@ const gridData = [
       "Difficulty: Insane",
     ],
     buttonText: "Try The Lab",
+    publishedDate: "2025-01-13", 
     buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/boomer",
     isVIP: true,
   },
@@ -128,15 +129,22 @@ function renderGridItems(page) {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
 
+function renderGridItems(page) {
+  gridContainer.innerHTML = ""; // Clear existing grid items
+
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
   gridData.slice(startIndex, endIndex).forEach((item) => {
     const card = document.createElement("a");
     card.setAttribute("href", item.buttonLink);
-    card.setAttribute("target", "_blank");  // Add this line
+    card.setAttribute("target", "_blank");
     card.classList.add("girgis-card");
 
     if (item.isVIP) {
       card.classList.add("vip");
     }
+
     const image = document.createElement("img");
     image.setAttribute("src", item.imageSrc);
     image.setAttribute("alt", "");
@@ -150,13 +158,18 @@ function renderGridItems(page) {
       listItem.textContent = detail;
       if (detail.includes("Difficulty:")) {
         const detailParts = detail.split(":");
-        const difficultyLevel = detailParts[1].trim(); // Get the difficulty level text
+        const difficultyLevel = detailParts[1].trim();
         listItem.innerHTML = `${detailParts[0]}: <span class="${getDifficultyClass(difficultyLevel)}">${difficultyLevel}</span>`;
       } else {
         listItem.textContent = detail;
       }
       detailsList.appendChild(listItem);
     });
+
+    // Add the published date
+    const dateListItem = document.createElement("li");
+    dateListItem.textContent = `Published Date: ${item.publishedDate}`;
+    detailsList.appendChild(dateListItem);
 
     const button = document.createElement("button");
     button.textContent = item.buttonText;
@@ -171,6 +184,7 @@ function renderGridItems(page) {
 
   currentPageIndicator.textContent = `Page ${currentPage}`;
 }
+
 
 function getDifficultyClass(difficulty) {
   switch (difficulty) {
