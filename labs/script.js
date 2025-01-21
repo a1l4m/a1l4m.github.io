@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/Trent.png",
+    title: "Trent",
+    details: [
+      "Published On: HackTheBox",
+      "Type: DFIR - Firmware",
+      "OS: Firmware",
+      "Difficulty: Medium",
+    ],
+	publishedDate: "30 Jan 2025",
+    buttonText: "Try The Lab",
+    buttonLink: "https://app.hackthebox.com/sherlocks/Trent",
+    isVIP: false,
+  },{
 	imageSrc: "./images/Boomer.png",
     title: "Boomer",
     details: [
