@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/Trend.png",
+    title: "Trend",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Firmware",
+      "OS: Firmware",
+      "Difficulty: Easy",
+    ],
+	publishedDate: "7 Feb 2025",
+    buttonText: "Try The Lab",
+    buttonLink: "#####",
+    isVIP: false,
+  },{
 	imageSrc: "./images/Trent.png",
     title: "Trent",
     details: [
