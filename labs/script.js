@@ -11,7 +11,7 @@ const gridData = [
 	publishedDate: "7 Feb 2025",
     buttonText: "Try The Lab",
     buttonLink: "#####",
-    isVIP: false,
+    isVIP: true,
   },{
 	imageSrc: "./images/Trent.png",
     title: "Trent",
@@ -66,19 +66,6 @@ const gridData = [
     buttonLink: "https://app.hackthebox.com/sherlocks/Nuts",
     isVIP: false,
   },{
-    imageSrc: "./images/SpottedInTheWild.png",
-    title: "SpottedInTheWild",
-    details: [
-      "Published On: CyberDefenders",
-      "Type: Endpoint Forensics",
-      "OS: Windows",
-      "Difficulty: Hard",
-    ],
-	publishedDate: "16 Feb 2024",
-    buttonText: "Try The Lab",
-    buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/spottedinthewild/",
-    isVIP: false,
-  },{
     imageSrc: "./images/BTLO-Krank.png",
     title: "BTLO-Krank",
     details: [
@@ -91,6 +78,19 @@ const gridData = [
     buttonText: "Try The Lab",
     buttonLink: "https://blueteamlabs.online/home/investigation/krank-d14513a65f",
     isVIP: true,
+  },{
+    imageSrc: "./images/SpottedInTheWild.png",
+    title: "SpottedInTheWild",
+    details: [
+      "Published On: CyberDefenders",
+      "Type: Endpoint Forensics",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "16 Feb 2024",
+    buttonText: "Try The Lab",
+    buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/spottedinthewild/",
+    isVIP: false,
   },{
     imageSrc: "./images/KikiPass.png",
     title: "KikiPass",
