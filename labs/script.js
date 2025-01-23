@@ -4,7 +4,7 @@ const gridData = [
     title: "Trend",
     details: [
       "Published On: BlueTeamLabs",
-      "Type: DFIR - Firmware",
+      "Type: DFIR - Network",
       "OS: Firmware",
       "Difficulty: Easy",
     ],
@@ -17,7 +17,7 @@ const gridData = [
     title: "Trent",
     details: [
       "Published On: HackTheBox",
-      "Type: DFIR - Firmware",
+      "Type: DFIR - Network",
       "OS: Firmware",
       "Difficulty: Medium",
     ],
@@ -30,7 +30,7 @@ const gridData = [
     title: "Boomer",
     details: [
       "Published On: CyberDefenders",
-      "Type: DFIR - Endpoint & Memory",
+      "Type: DFIR - Memory",
       "OS: Windows",
       "Difficulty: Insane",
     ],
@@ -43,7 +43,7 @@ const gridData = [
     title: "Masquerade Halloween '24",
     details: [
       "Published On: BlueTeamLabs [Trick or Threat event]",
-      "Type: DFIR - Endpoint & Memory",
+      "Type: DFIR - Disk & Memory",
       "OS: Windows",
       "Difficulty: Hard",
     ],
@@ -57,7 +57,7 @@ const gridData = [
     title: "Nuts",
     details: [
       "Published On: HackTheBox",
-      "Type: DFIR - Endpoint",
+      "Type: DFIR - Disk",
       "OS: Windows",
       "Difficulty: Medium",
     ],
@@ -70,7 +70,7 @@ const gridData = [
     title: "BTLO-Krank",
     details: [
       "Published On: BlueTeamLabs",
-      "Type: DFIR - Endpoint",
+      "Type: DFIR - Disk",
       "OS: MAC",
       "Difficulty: Hard",
     ],
@@ -83,7 +83,7 @@ const gridData = [
     title: "SpottedInTheWild",
     details: [
       "Published On: CyberDefenders",
-      "Type: Endpoint Forensics",
+      "Type: DFIR - Disk",
       "OS: Windows",
       "Difficulty: Hard",
     ],
@@ -109,7 +109,7 @@ const gridData = [
     title: "JetBrains",
     details: [
       "Published On: CyberDefenders",
-      "Type: Network Forensics",
+      "Type: DFIR - Network",
       "OS: Linux",
       "Difficulty: Medium",
     ],
@@ -122,7 +122,7 @@ const gridData = [
     title: "Malicious PyPi",
     details: [
       "Published On: CyberDefenders",
-      "Type: Endpoint Forensics",
+      "Type: DFIR - Disk",
       "OS: Windows",
       "Difficulty: Medium",
     ],
@@ -135,7 +135,7 @@ const gridData = [
     title: "ConflueneceRCE",
     details: [
       "Published On: CyberDefenders",
-      "Type: Endpoint Forensics",
+      "Type: DFIR - Disk",
       "OS: Linux",
       "Difficulty: Medium",
     ],
