@@ -13,6 +13,19 @@ const gridData = [
     buttonLink: "#####",
     isVIP: true,
   },{
+	imageSrc: "./images/MacLock.png",
+    title: "MacLock",
+    details: [
+      "Published On: CyberDefenders",
+      "Type: DFIR - Disk",
+      "OS: MAC",
+      "Difficulty: Medium",
+    ],
+	publishedDate: "27 Jan 2025",
+    buttonText: "Try The Lab",
+    buttonLink: "https://cyberdefenders.org/blueteam-ctf-challenges/maclock/",
+    isVIP: true,
+  },{
 	imageSrc: "./images/Trent.png",
     title: "Trent",
     details: [
