@@ -8,7 +8,7 @@ const gridData = [
       "OS: Firmware",
       "Difficulty: Easy",
     ],
-	publishedDate: "7 Feb 2025",
+	publishedDate: "31 Jan 2025",
     buttonText: "Try The Lab",
     buttonLink: "#####",
     isVIP: true,
