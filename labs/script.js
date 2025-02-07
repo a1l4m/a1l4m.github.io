@@ -10,7 +10,7 @@ const gridData = [
     ],
 	publishedDate: "7 Feb 2025",
     buttonText: "Try The Lab",
-    buttonLink: "#####",
+    buttonLink: "https://blueteamlabs.online/home/investigation/trend-7df64fbe91",
     isVIP: true,
   },{
 	imageSrc: "./images/Trent.png",
