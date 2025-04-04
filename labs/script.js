@@ -10,7 +10,7 @@ const gridData = [
     ],
 	publishedDate: "4 Apr 2025",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/CryptoBook-####",
+    buttonLink: "https://blueteamlabs.online/home/investigation/cryptobook-a87c9b65ec",
     isVIP: true,
   },{
 	imageSrc: "./images/Trend.png",
