@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/CryptoBook.png",
+    title: "CryptoBook",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: MAC",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "4 Apr 2025",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/CryptoBook-####",
+    isVIP: true,
+  },{
 	imageSrc: "./images/Trend.png",
     title: "Trend",
     details: [
