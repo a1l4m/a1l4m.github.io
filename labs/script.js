@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/undercover_shell.png",
+    title: "Trend",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Memory",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "18 Apr 2025",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/trend-7df64fbe91",
+    isVIP: true,
+  },{
 	imageSrc: "./images/CryptoBook.png",
     title: "CryptoBook",
     details: [
