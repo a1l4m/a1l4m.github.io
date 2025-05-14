@@ -1,7 +1,7 @@
 const gridData = [
     {
 	imageSrc: "./images/undercover_shell.png",
-    title: "Trend",
+    title: "Undercover Shell",
     details: [
       "Published On: BlueTeamLabs",
       "Type: DFIR - Memory",
