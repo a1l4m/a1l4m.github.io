@@ -10,7 +10,7 @@ const gridData = [
     ],
 	publishedDate: "18 Apr 2025",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/trend-7df64fbe91",
+    buttonLink: "https://blueteamlabs.online/home/investigation/undercover-shell-71fcba3563",
     isVIP: true,
   },{
 	imageSrc: "./images/CryptoBook.png",
