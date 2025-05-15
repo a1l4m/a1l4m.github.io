@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/InsideJob.png",
+    title: "InsideJob",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "16 May 2025",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/InsideJob#",
+    isVIP: true,
+  },{
 	imageSrc: "./images/undercover_shell.png",
     title: "Undercover Shell",
     details: [
