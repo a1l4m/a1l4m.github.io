@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/BadaBreach.png",
+    title: "Bada Breach",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: Threat Hunting",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "3 Oct 2025",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/bada-breach-a476f8b6bf",
+    isVIP: true,
+  },{
 	imageSrc: "./images/InsideJob.png",
     title: "InsideJob",
     details: [
@@ -10,7 +23,7 @@ const gridData = [
     ],
 	publishedDate: "16 May 2025",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/InsideJob#",
+    buttonLink: "https://blueteamlabs.online/home/investigation/inside-job-c6077ee90b",
     isVIP: true,
   },{
 	imageSrc: "./images/undercover_shell.png",
@@ -298,3 +311,4 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
