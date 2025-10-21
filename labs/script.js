@@ -1,9 +1,9 @@
 const gridData = [
     {
 	imageSrc: "./images/ZetaEnd.png",
-    title: "Zeta End (TOT25)",
+    title: "Zeta End",
     details: [
-      "Published On: BlueTeamLabs",
+      "Published On: BlueTeamLabs (TOT25)",
       "Type: DFIR - Disk",
       "OS: Windows",
       "Difficulty: Insane",
@@ -105,9 +105,9 @@ const gridData = [
     isVIP: true,
   },{
     imageSrc: "./images/Masquerade.png",
-    title: "Masquerade Halloween '24",
+    title: "Masquerade",
     details: [
-      "Published On: BlueTeamLabs [Trick or Threat event]",
+      "Published On: BlueTeamLabs [TOT24]",
       "Type: DFIR - Disk & Memory",
       "OS: Windows",
       "Difficulty: Hard",
@@ -324,5 +324,6 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
 
