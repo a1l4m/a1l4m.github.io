@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/ZetaEnd.png",
+    title: "Zeta End (TOT25)",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Windows",
+      "Difficulty: Insane",
+    ],
+	publishedDate: "TBD",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigations#",
+    isVIP: true,
+  },{
 	imageSrc: "./images/BadaBreach.png",
     title: "Bada Breach",
     details: [
@@ -311,4 +324,5 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
