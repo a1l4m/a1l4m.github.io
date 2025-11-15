@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/EmptyThreat.png",
+    title: "Empty Threat",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "14 Nov 2025",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/empty-threat-d10f387ef5",
+    isVIP: true,
+  },{
 	imageSrc: "./images/ZetaEnd.png",
     title: "Zeta End",
     details: [
@@ -8,9 +21,9 @@ const gridData = [
       "OS: Windows",
       "Difficulty: Insane",
     ],
-	publishedDate: "TBD",
+	publishedDate: "31 Oct 2025",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigations#",
+    buttonLink: "https://blueteamlabs.online/home/investigation/zeta-end-2a5b4e8c18",
     isVIP: true,
   },{
 	imageSrc: "./images/BadaBreach.png",
@@ -324,6 +337,7 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
 
 
