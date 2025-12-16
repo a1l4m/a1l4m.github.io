@@ -1,0 +1,803 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+	
+    <link rel="icon" href="https://a1l4m.github.io/favicon.ico" type="image/x-icon">
+    <title>The Last Two Bytes: Resident Data and Fixup Artifacts in NTFS</title>
+	<meta property="og:title" content="The Last Two Bytes: Resident Data and Fixup Artifacts in NTFS" />
+     <meta property="og:description" content="An in-depth analysis of NTFS resident data thresholds, revealing how filename length influences data residency and exposing a fixup artifact at offset 0x1FE with direct forensic implications." />
+	<meta property="og:image" content="img/background.png">
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="627" />
+	<meta property="og:type" content="website" />
+      
+      
+        <link rel="canonical" href="https://a1l4m.github.io/index.html/">
+      
+      
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.3">
+    
+    
+      
+        <title>My Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.d7758b05.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="orange" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-last-two-bytes-resident-data-and-fixup-artifacts-in-ntfs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="My Docs" class="md-header__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            My Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Last Two Bytes: Resident Data and Fixup Artifacts in NTFS
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="My Docs" class="md-nav__button md-logo" aria-label="My Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    My Docs
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    The Last Two Bytes: Resident Data and Fixup Artifacts in NTFS
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    The Last Two Bytes: Resident Data and Fixup Artifacts in NTFS
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis-of-resident-and-non-resident-data-in-the-ntfs-master-file-table-mft" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis of Resident and Non-Resident Data in the NTFS Master File Table (MFT)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analysis of Resident and Non-Resident Data in the NTFS Master File Table (MFT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resident-data-threshold-based-on-file-size-and-filename-length" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resident Data Threshold Based on File Size and Filename Length
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resident Data Threshold Based on File Size and Filename Length">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resident-data-behavior-for-filenames-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resident Data Behavior for Filenames ≤ 7
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resident-data-behavior-for-filenames-between-8-and-11-characters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resident Data Behavior for Filenames Between 8 and 11 Characters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resident-data-behavior-for-filenames-longer-than-11-characters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resident Data Behavior for Filenames Longer Than 11 Characters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-filenames-longer-than-12-characters-and-their-effect-on-resident-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Long Filenames Longer Than 12 Characters, and Their Effect on Resident Data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-record-modifications-when-data-is-resident-important" class="md-nav__link">
+    <span class="md-ellipsis">
+      File Record Modifications When Data Is Resident [Important]
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Record Modifications When Data Is Resident [Important]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implications-for-digital-forensics-and-malware-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implications for Digital Forensics and Malware Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analysis-of-resident-and-non-resident-data-in-the-ntfs-master-file-table-mft" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analysis of Resident and Non-Resident Data in the NTFS Master File Table (MFT)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analysis of Resident and Non-Resident Data in the NTFS Master File Table (MFT)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resident-data-threshold-based-on-file-size-and-filename-length" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resident Data Threshold Based on File Size and Filename Length
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resident Data Threshold Based on File Size and Filename Length">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resident-data-behavior-for-filenames-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resident Data Behavior for Filenames ≤ 7
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resident-data-behavior-for-filenames-between-8-and-11-characters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resident Data Behavior for Filenames Between 8 and 11 Characters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resident-data-behavior-for-filenames-longer-than-11-characters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resident Data Behavior for Filenames Longer Than 11 Characters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-filenames-longer-than-12-characters-and-their-effect-on-resident-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Long Filenames Longer Than 12 Characters, and Their Effect on Resident Data
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-record-modifications-when-data-is-resident-important" class="md-nav__link">
+    <span class="md-ellipsis">
+      File Record Modifications When Data Is Resident [Important]
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Record Modifications When Data Is Resident [Important]">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implications-for-digital-forensics-and-malware-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implications for Digital Forensics and Malware Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Credits
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="the-last-two-bytes-resident-data-and-fixup-artifacts-in-ntfs">The Last Two Bytes: Resident Data and Fixup Artifacts in NTFS</h1>
+
+<p class="meta-info">
+    December 16, 2025 &bull; 15 min read &bull; a1l4m,M4shl3
+</p>
+<style>.meta-info {
+    font-size: 0.8rem; /* Font size for better readability */
+    color: #8e8e8e; /* Gray color for metadata */
+    margin: 0px 0 20px; /* Spacing around the metadata */
+}
+</style>
+
+<h2 id="introduction">Introduction</h2>
+<p>The Master File Table (MFT) in NTFS plays a critical role in file storage by managing metadata and determining whether file content is stored within the MFT itself (<strong>resident data</strong>) or externally in clusters (<strong>non-resident data</strong>). Understanding the conditions that influence <strong>resident data storage</strong> is essential for digital forensics and incident response, as these conditions impact how files are structured within the NTFS file system.</p>
+<p>This study examines the relationship between <strong>file size, filename length, and resident data behavior</strong>, providing a structured methodology to determine the threshold at which file content transitions from resident to non-resident storage. Additionally, it was observed that when <strong>data remains resident within the MFT, a structural modification occurs within the File Record at offset <code>0x1FE</code></strong>. This behavior may have forensic implications, particularly in <strong>file integrity verification and malware investigations</strong>.</p>
+<p>By understanding these patterns, forensic analysts can improve their ability to detect <strong>resident malware</strong>, reconstruct file system events, and evaluate the integrity of NTFS file records during investigations.</p>
+<p><img alt="image.png" src="img/background.png" /></p>
+<hr />
+<h2 id="analysis-of-resident-and-non-resident-data-in-the-ntfs-master-file-table-mft">Analysis of Resident and Non-Resident Data in the NTFS Master File Table (MFT)</h2>
+<h3 id="resident-data-threshold-based-on-file-size-and-filename-length">Resident Data Threshold Based on File Size and Filename Length</h3>
+<p>The length of a filename is a critical factor in determining whether file content remains resident within the MFT. Variations in filename length directly influence the size of the <code>$File_Name</code> attribute, which, in turn, affects the available space for storing file content within the MFT. As filename length increases, additional space is occupied by the <code>$File_Name</code> attribute, reducing the amount of space available for resident data. This relationship must be carefully considered when analyzing NTFS structures in forensic investigations.</p>
+<h4 id="resident-data-behavior-for-filenames-7">Resident Data Behavior for Filenames ≤ 7</h4>
+<ul>
+<li>
+<p>When filenames contained <strong>7 characters or fewer</strong>, including the file extension (e.g., <code>777.txt</code>, <code>77.txt</code>, <code>7.txt</code>), the <code>$File_Name</code> attribute length was measured as <strong>0x68</strong> bytes.</p>
+<p><img alt="image.png" src="img/image.png" /></p>
+</li>
+<li>
+<p>It was observed that when the <strong>file size remained ≤ 696 bytes</strong>, the file content was stored <strong>resident</strong> within the MFT.</p>
+</li>
+<li>However, when the file size increased by just <strong>one additional byte (697 bytes total)</strong>, the data became <strong>non-resident</strong>, causing the file size on disk to expand to <strong>4 KB</strong>, despite the actual file content being only <strong>697 bytes</strong>.</li>
+<li>
+<p>When the filename exceeded <strong>7 characters</strong>, the <code>$File_Name</code> attribute length increased to <strong>0x70 bytes</strong>, requiring a smaller file size (below <strong>696 bytes</strong>) to maintain resident storage.</p>
+<p><img alt="image.png" src="img/image%201.png" /></p>
+</li>
+</ul>
+<h4 id="resident-data-behavior-for-filenames-between-8-and-11-characters">Resident Data Behavior for Filenames Between 8 and 11 Characters</h4>
+<ul>
+<li>
+<p>The <strong>file name attribute length</strong> was measured as <strong>0x70</strong> bytes when using a <strong>8…11 characters</strong>, including the file extension (e.g., <code>8888.txt</code>, <code>88888.txt</code>, <code>888888.txt</code>).</p>
+<p><img alt="image.png" src="img/image%202.png" /></p>
+</li>
+<li>
+<p>To determine the <strong>maximum resident data size</strong> for filenames between 8 <strong>and 11 characters</strong>, the difference in attribute length was calculated:</p>
+<ul>
+<li><strong>0x70 - 0x68 = 0x8  (in decimal: 8 bytes reduction in available resident space).</strong></li>
+<li>The adjusted resident data limit becomes <strong>688 bytes</strong> instead of 696 bytes. (696-8=688)</li>
+</ul>
+</li>
+<li>When filenames ranged between <strong>7 and 11 characters</strong>, file content remained resident up to <strong>688 bytes</strong>.</li>
+<li>
+<p>However, when filenames exceeded <strong>11 characters</strong>, data became <strong>non-resident</strong>, even if the file size was within the expected resident threshold.</p>
+<p><img alt="image.png" src="img/image%203.png" /></p>
+</li>
+</ul>
+<h4 id="resident-data-behavior-for-filenames-longer-than-11-characters">Resident Data Behavior for Filenames Longer Than 11 Characters</h4>
+<ul>
+<li>
+<p>When filenames exceeded <strong>11 characters</strong>, the <code>$File_Name</code> attribute length increased to <strong>0x78 bytes</strong>.</p>
+<p><img alt="image.png" src="img/image%204.png" /></p>
+</li>
+<li>
+<p>Applying the same methodology, the reduction in available resident space is:</p>
+<ul>
+<li><strong>0x78 - 0x68 = 0x10 bytes (in decimal: 16 bytes reduction in available resident space).</strong></li>
+<li>The new maximum resident data size is <strong>680 bytes</strong>. (696-16 = 680)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This pattern was expected to remain consistent; however, an issue arose due to Microsoft’s definition of <strong>Long File Names (LFN)</strong>. So it worked for <strong>12</strong> characters but not <strong>13</strong> and above even though they both have the same <code>$File_Name</code> <strong>attribute length</strong> which is **0x78.</p>
+</div>
+<p><img alt="image.png" src="img/image%205.png" /></p>
+</li>
+</ul>
+<blockquote>
+<p>All tests were conducted with filename extensions included (We considered the dot <code>.</code> as a character). If the extension is removed, the results differ, and this aspect will be discussed in the following section.</p>
+</blockquote>
+<hr />
+<h4 id="long-filenames-longer-than-12-characters-and-their-effect-on-resident-data">Long Filenames Longer Than 12 Characters, and Their Effect on Resident Data</h4>
+<ul>
+<li>
+<p>When filenames contained <strong>≥ 13 characters (including the extension) or ≥ 9 characters (excluding the extension)</strong>, they were observed to be treated as <strong>Long File Names (LFN)</strong> by the MFT.</p>
+<ul>
+<li><strong>Explanation:</strong> NTFS defines <strong>long filenames</strong> as those exceeding <strong>8 characters plus a 3-character extension</strong> (e.g., <code>"SANS12345.TXT"</code>).</li>
+</ul>
+<p><img alt="upscalemedia-transformed.png" src="img/upscalemedia-transformed.png" /></p>
+</li>
+<li>
+<p>When a filename is classified as an LFN, additional content is written to the <code>$File_Name</code> attribute, increasing its size and altering the expected pattern.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>The presence of variable-length long filenames modifies the <strong>content size of the <code>$File_Name</code> attribute</strong>, which subsequently impacts the available space for resident data.</p>
+</div>
+</li>
+</ul>
+<p><img alt="image.png" src="img/image%206.png" /></p>
+<ul>
+<li>
+<p>Notice the size of the content = <strong>0x5A</strong>  and File is treated as <strong>Long File Name.</strong></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p><strong>As a result, no consistent pattern could be established for predicting the maximum resident data size when filenames exceeded the long filename threshold.</strong></p>
+</div>
+</li>
+</ul>
+<hr />
+<h2 id="file-record-modifications-when-data-is-resident-important">File Record Modifications When Data Is Resident [Important]</h2>
+<p>A critical forensic artifact was identified when analyzing <strong>resident data storage</strong> in NTFS. When file content remains <strong>resident</strong> within the Master File Table (MFT), a modification occurs in the <strong>File Record structure</strong> at <strong>offset <code>0x1FE</code></strong>. This offset corresponds to <strong>510 bytes</strong>, which is <strong>less than the sector size (512 bytes) by 2 bytes</strong>.</p>
+<p><strong>Key Observations:</strong></p>
+<ul>
+<li>
+<p>The <strong>2 bytes at <code>0x1FE</code> are replaced with a fixup value</strong> from the <strong>Fixup Array (USA)</strong> as part of NTFS's <strong>Update Sequence Number (USN) Fixup process</strong>. The original 2 bytes from <code>0x1FE</code> are stored in the Fixup Array at <code>0x32</code> for integrity verification during read operations.</p>
+<p><img alt="image.png" src="img/image%207.png" /></p>
+<p><img alt="image.png" src="img/image%208.png" /></p>
+</li>
+</ul>
+<p><strong>Reason for MFT Modification at Offset 0x1FE:</strong></p>
+<p>The observed behavior is a direct result of NTFS's <strong>Update Sequence Number</strong> (USN) Fixup mechanism. This mechanism is designed to protect the integrity of critical file system structures, such as the MFT, by ensuring that sector boundaries are properly validated during disk read/write operations.</p>
+<p>When a file record is resident within the MFT, the last two bytes of each <code>512-byte</code> sector (i.e., 0x1FE in the first sector) must be protected against corruption. To achieve this, <strong>NTFS replaces these bytes with a fixup value and stores the original bytes in the Fixup Array.</strong></p>
+<p><strong>How Fixup Values Work:</strong></p>
+<p>The fixup process follows these steps:</p>
+<ol>
+<li><strong>NTFS assigns a Fixup Value</strong><ul>
+<li>At the start of an MFT record, NTFS maintains an <strong>Update Sequence Number (USN)</strong>, which increments with each modification.</li>
+<li>This value is stored at a predefined location, typically within the <strong>Fixup Array (USA)</strong>.</li>
+</ul>
+</li>
+<li><strong>Overwriting the Last Two Bytes</strong><ul>
+<li>The last two bytes of each sector (e.g., <code>0x1FE</code> for the first sector) are <strong>replaced</strong> with the fixup value.</li>
+<li>The <strong>original bytes</strong> are <strong>saved in the Fixup Array</strong> for later recovery.</li>
+</ul>
+</li>
+<li>
+<p><strong>Integrity Check on Read Operations</strong></p>
+<ul>
+<li>When the file system reads the MFT record, it checks whether the last two bytes of each sector match the stored fixup value.</li>
+<li>If they match, NTFS restores the original bytes from the Fixup Array.</li>
+<li>If they <strong>do not match</strong>, NTFS <strong>detects corruption</strong> and prevents the use of the damaged record.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All addresses are <strong>relative</strong> to the <strong>start of the File Record</strong></p>
+</div>
+</li>
+</ol>
+<h3 id="implications-for-digital-forensics-and-malware-analysis"><strong>Implications for Digital Forensics and Malware Analysis</strong></h3>
+<ul>
+<li>The modification of <strong>offset <code>0x1FE</code></strong> when storing resident data could have implications for <strong>file integrity verification</strong> and <strong>malware investigations</strong>.</li>
+<li>If a file contains malicious code as <strong>resident data</strong>, this behavior may interfere with forensic procedures that rely on static file hashing, as the altered MFT structure may affect <strong>hash calculations</strong> and <strong>file integrity verification</strong>.</li>
+<li>This could present a challenge when using file hashes as <strong>Indicators of Compromise (IOCs)</strong> in threat hunting and digital forensics investigations.</li>
+</ul>
+<hr />
+<h2 id="key-takeaways"><strong>Key Takeaways</strong></h2>
+<ul>
+<li>The length of a filename influences whether file content remains <strong>resident</strong> within the MFT by modifying the <code>$File_Name</code> attribute length.</li>
+<li>The transition from <strong>resident to non-resident data</strong> occurs at different file size thresholds depending on filename length.</li>
+<li>When filenames exceed <strong>12 characters</strong>, the presence of <strong>long filenames (LFN)</strong> disrupts the observed pattern, making resident storage behavior less predictable.</li>
+<li>A <strong>forensic artifact</strong> was identified in which <strong>offset <code>0x1FE</code> is modified</strong> when file content is stored as resident data, potentially affecting forensic hashing and malware detection.</li>
+</ul>
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>This study highlights key findings regarding the relationship between <strong>file size, filename length, and MFT resident data storage behavior.</strong> A clear correlation has been established between filename length and the available resident data space within the MFT, demonstrating how filenames influence the transition from resident to non-resident storage. However, filename attribute is just one of several factors affecting the size of resident data. Our analysis considers only the creation of a basic file, not including other cases such as data compression and encryption, which introduce additional attributes that can impact data residency. The identification of modifications at <strong>offset</strong> <code>0x1FE</code> presents a potential forensic artifact that could be leveraged for detecting <strong>resident malware</strong> and analyzing <strong>NTFS anomalies, as many people may extract resident data incorrectly</strong>. These findings emphasize the importance of considering filename length and other influencing factors during forensic investigations, as even minor changes in naming conventions or storage attributes can significantly impact data residency within NTFS file structures.</p>
+<h2 id="credits"><strong>Credits</strong></h2>
+<p>Khaled Allam - <a href="https://www.linkedin.com/in/a1l4m/">Linkedin</a></p>
+<p>Ahmed Mahmoud Fathy - <a href="https://www.linkedin.com/in/m4shl3">LinkedIn</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+    
+  </body>
+  <a id="back-arrow" href="../../index.html" 
+   style="
+       position: fixed; 
+       top: 20px; 
+       left: 200px; /* Keep it near the left edge */
+       text-decoration: none; 
+       font-size: 22px; 
+       z-index: 1000;
+       transition: opacity 0.3s ease-in-out;
+       opacity: 0; /* Initially hidden */
+   ">
+   ← Home
+</a>
+<script>
+    const backArrow = document.getElementById("back-arrow");
+
+    function updateArrowVisibility() {
+        if (window.scrollY === 0) {
+            backArrow.style.opacity = "1"; // Show the back arrow
+        } else {
+            backArrow.style.opacity = "0"; // Hide the back arrow
+        }
+    }
+
+    window.addEventListener("scroll", updateArrowVisibility);
+    window.addEventListener("load", updateArrowVisibility);
+</script>
+</html>
