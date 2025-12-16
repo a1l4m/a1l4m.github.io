@@ -10,7 +10,7 @@ const gridData = [
     ],
 	publishedDate: "25 Nov 2025",
     buttonText: "See The Writeup",
-    buttonLink: "https://medium.com/@MAb0EL3TA/neurogrid-htb-ctf-human-only-2025-secret-meeting-challenge-9b36f79e5158",
+    buttonLink: "https://www.sudeepvision.com/blog/neurogrid_ctf_2025/neurogrid_ctf_2025_secret_meeting_forensics_challenge/",
     isVIP: false,
   },{
 	imageSrc: "./images/EmptyThreat.png",
@@ -350,6 +350,7 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
 
 
