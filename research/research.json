@@ -1,16 +1,17 @@
 [
     {
-        "title": "Using Emulated Linux Environments as an Anti-Forensics technique",
-        "description": "Exploring how virtualization, specifically using QEMU, can create such blind spots for existing solutions. This discussion will address both perspectives: how attackers can use virtualization to stage malware and how forensic investigators can detect and analyze these activities.",
-        "thumbnail": "thumbnails/virtual.png",
-        "path": "posts/virtual/index.html",
-        "date": "2024-12-01"
-    },{
         "title": "The Last Two Bytes: Resident Data and Fixup Artifacts in NTFS",
         "description": "An in-depth analysis of NTFS resident data thresholds, revealing how filename length influences data residency and exposing a fixup artifact at offset 0x1FE with direct forensic implications.",
         "thumbnail": "thumbnails/MFT.png",
         "path": "posts/MFT/index.html",
         "date": "2025-12-16"
+    },{
+        "title": "Using Emulated Linux Environments as an Anti-Forensics technique",
+        "description": "Exploring how virtualization, specifically using QEMU, can create such blind spots for existing solutions. This discussion will address both perspectives: how attackers can use virtualization to stage malware and how forensic investigators can detect and analyze these activities.",
+        "thumbnail": "thumbnails/virtual.png",
+        "path": "posts/virtual/index.html",
+        "date": "2024-12-01"
     }
 ]
+
 
