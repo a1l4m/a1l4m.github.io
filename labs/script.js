@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/NeuroGridCTF.png",
+    title: "Secret Meeting",
+    details: [
+      "Published On: HTB - Neurogrid CTF: Human Only",
+      "Type: DFIR - Memory",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "25 Nov 2025",
+    buttonText: "See The Writeup",
+    buttonLink: "https://medium.com/@MAb0EL3TA/neurogrid-htb-ctf-human-only-2025-secret-meeting-challenge-9b36f79e5158",
+    isVIP: false,
+  },{
 	imageSrc: "./images/EmptyThreat.png",
     title: "Empty Threat",
     details: [
@@ -337,6 +350,7 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
 
 
