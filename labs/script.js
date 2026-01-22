@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/supplydrop1.png",
+    title: "Supply Drop 1",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Linux-WSL",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "15 Jan 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/supply-drop-1-2b27bf2799",
+    isVIP: true,
+  },{
 	imageSrc: "./images/NeuroGridCTF.png",
     title: "Secret Meeting",
     details: [
@@ -350,6 +363,7 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
 
 
