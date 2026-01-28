@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/SupplyDrop2.png",
+    title: "Supply Drop 2",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: Malware Analysis",
+      "OS: Windows",
+      "Difficulty: Easy",
+    ],
+	publishedDate: "29 Jan 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/supply-drop-2-#",
+    isVIP: true,
+  },{
 	imageSrc: "./images/supplydrop1.png",
     title: "Supply Drop 1",
     details: [
@@ -363,6 +376,7 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
 
 
