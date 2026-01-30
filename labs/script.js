@@ -6,7 +6,7 @@ const gridData = [
       "Published On: BlueTeamLabs",
       "Type: Malware Analysis",
       "OS: Windows",
-      "Difficulty: Easy",
+      "Difficulty: Medium",
     ],
 	publishedDate: "29 Jan 2026",
     buttonText: "Try The Lab",
@@ -376,6 +376,7 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
 
 
