@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/MacUpdater.png",
+    title: "MAC Updater",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: MAC",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "27 Feb 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/MacUpdater-#",
+    isVIP: true,
+  },{
 	imageSrc: "./images/SupplyDrop2.png",
     title: "Supply Drop 2",
     details: [
@@ -10,7 +23,7 @@ const gridData = [
     ],
 	publishedDate: "29 Jan 2026",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/supply-drop-2-#",
+    buttonLink: "https://blueteamlabs.online/home/investigation/supply-drop-2-0f25931883",
     isVIP: true,
   },{
 	imageSrc: "./images/supplydrop1.png",
@@ -376,6 +389,7 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
 
 
