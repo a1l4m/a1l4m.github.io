@@ -6,7 +6,7 @@ const gridData = [
       "Published On: BlueTeamLabs",
       "Type: DFIR - Disk",
       "OS: MAC",
-      "Difficulty: Hard",
+      "Difficulty: Medium",
     ],
 	publishedDate: "27 Feb 2026",
     buttonText: "Try The Lab",
@@ -389,6 +389,7 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
 
 
