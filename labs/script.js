@@ -10,7 +10,7 @@ const gridData = [
     ],
 	publishedDate: "27 Feb 2026",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/MacUpdater-#",
+    buttonLink: "https://blueteamlabs.online/home/investigation/mac-updater-259acf3529",
     isVIP: true,
   },{
 	imageSrc: "./images/SupplyDrop2.png",
@@ -389,6 +389,7 @@ nextPageBtn.addEventListener("click", () => {
 });
 
 renderGridItems(currentPage);
+
 
 
 
