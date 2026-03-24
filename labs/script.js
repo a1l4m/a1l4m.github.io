@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/Dumpster.png",
+    title: "Dumpster",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: Threat Hunting",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "13 Mar 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/dumpster-303c7fec88",
+    isVIP: true,
+  },{
 	imageSrc: "./images/MacUpdater.png",
     title: "MAC Updater",
     details: [
