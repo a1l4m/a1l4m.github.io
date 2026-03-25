@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/MailFall.png",
+    title: "MailFall",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "27 Mar 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/MailFall-#",
+    isVIP: true,
+  },{
 	imageSrc: "./images/Dumpster.png",
     title: "Dumpster",
     details: [
