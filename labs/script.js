@@ -10,7 +10,7 @@ const gridData = [
     ],
 	publishedDate: "27 Mar 2026",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/MailFall-#",
+    buttonLink: "https://blueteamlabs.online/home/investigation/mailfail-a7d135e48e",
     isVIP: true,
   },{
 	imageSrc: "./images/Dumpster.png",
