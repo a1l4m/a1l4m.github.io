@@ -1,5 +1,31 @@
 const gridData = [
     {
+	imageSrc: "./images/FreqNoise.png",
+    title: "Frequency Noise",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: Malware Analysis",
+      "OS: Windows",
+      "Difficulty: Medium",
+    ],
+	publishedDate: "24 Apr 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/FrequencyNoise-#",
+    isVIP: true,
+  },{
+	imageSrc: "./images/Fake.png",
+    title: "Fake",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "10 Apr 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/Fake-#",
+    isVIP: true,
+  },{
 	imageSrc: "./images/MailFall.png",
     title: "MailFall",
     details: [
