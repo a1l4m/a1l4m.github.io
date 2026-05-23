@@ -11,7 +11,7 @@ const gridData = [
 	publishedDate: "15 May 2026",
     buttonText: "Try The Lab",
     buttonLink: "https://blueteamlabs.online/home/investigation/txdrop-dbb8ad6a56",
-    isVIP: false,
+    isVIP: true,
   },{
 	imageSrc: "./images/FreqNoise.png",
     title: "Frequency Noise",
