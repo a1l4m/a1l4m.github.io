@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/inv_TxDrop.png",
+    title: "TxDrop",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Memory & Network Analysis",
+      "OS: Windows",
+      "Difficulty: Insane",
+    ],
+	publishedDate: "15 May 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/txdrop-dbb8ad6a56",
+    isVIP: false,
+  },{
 	imageSrc: "./images/FreqNoise.png",
     title: "Frequency Noise",
     details: [
@@ -10,8 +23,8 @@ const gridData = [
     ],
 	publishedDate: "24 Apr 2026",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/FrequencyNoise-#",
-    isVIP: true,
+    buttonLink: "https://blueteamlabs.online/home/investigation/frequency-noise-3509a35580",
+    isVIP: false,
   },{
 	imageSrc: "./images/Fake.png",
     title: "Fake",
@@ -23,8 +36,8 @@ const gridData = [
     ],
 	publishedDate: "10 Apr 2026",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/Fake-#",
-    isVIP: true,
+    buttonLink: "https://blueteamlabs.online/home/investigation/fake-be5f2e3b8d",
+    isVIP: false,
   },{
 	imageSrc: "./images/MailFall.png",
     title: "MailFall",
