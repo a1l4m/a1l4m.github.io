@@ -11,7 +11,7 @@ const gridData = [
 	publishedDate: "15 May 2026",
     buttonText: "Try The Lab",
     buttonLink: "https://blueteamlabs.online/home/investigation/txdrop-dbb8ad6a56",
-    isVIP: true,
+    isVIP: false,
   },{
 	imageSrc: "./images/FreqNoise.png",
     title: "Frequency Noise",
@@ -50,7 +50,7 @@ const gridData = [
 	publishedDate: "27 Mar 2026",
     buttonText: "Try The Lab",
     buttonLink: "https://blueteamlabs.online/home/investigation/mailfail-a7d135e48e",
-    isVIP: true,
+    isVIP: false,
   },{
 	imageSrc: "./images/Dumpster.png",
     title: "Dumpster",
@@ -58,7 +58,7 @@ const gridData = [
       "Published On: BlueTeamLabs",
       "Type: Threat Hunting",
       "OS: Windows",
-      "Difficulty: Hard",
+      "Difficulty: false",
     ],
 	publishedDate: "13 Mar 2026",
     buttonText: "Try The Lab",
@@ -154,7 +154,7 @@ const gridData = [
 	publishedDate: "3 Oct 2025",
     buttonText: "Try The Lab",
     buttonLink: "https://blueteamlabs.online/home/investigation/bada-breach-a476f8b6bf",
-    isVIP: true,
+    isVIP: false,
   },{
 	imageSrc: "./images/InsideJob.png",
     title: "InsideJob",
