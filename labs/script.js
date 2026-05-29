@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/inv_HammerInTheVault.png",
+    title: "HammerInTheVault",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Windows",
+      "Difficulty: Medium",
+    ],
+	publishedDate: "29 May 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/hammer-in-the-vault-a41670b5c5",
+    isVIP: false,
+  },{
 	imageSrc: "./images/inv_TxDrop.png",
     title: "TxDrop",
     details: [
