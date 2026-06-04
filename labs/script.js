@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/inv_PoisonAid.png",
+    title: "Poisoned Aid",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Windows",
+      "Difficulty: Medium",
+    ],
+	publishedDate: "12 Jun 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/Poisoned-Aid-#",
+    isVIP: false,
+  },{
 	imageSrc: "./images/inv_HammerInTheVault.png",
     title: "HammerInTheVault",
     details: [
