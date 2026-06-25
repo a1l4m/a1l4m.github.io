@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/inv_PhantomPixels.png",
+    title: "Phantom Pixels",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: Malware Analysis",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "26 Jun 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/PhantomPixels-#",
+    isVIP: false,
+  },{
 	imageSrc: "./images/inv_PoisonAid.png",
     title: "Poisoned Aid",
     details: [
