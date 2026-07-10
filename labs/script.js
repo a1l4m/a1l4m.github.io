@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/inv_ForumBreach.png",
+    title: "Forum Breach",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Linux",
+      "Difficulty: Medium",
+    ],
+	publishedDate: "10 May 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/ForumBreach-#",
+    isVIP: false,
+  },{
 	imageSrc: "./images/inv_PhantomPixels.png",
     title: "Phantom Pixels",
     details: [
