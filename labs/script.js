@@ -1,6 +1,6 @@
 const gridData = [
     {
-	imageSrc: "./images/inv_ForumBreach.png",
+	imageSrc: "./images/inv_forumbreach.png",
     title: "Forum Breach",
     details: [
       "Published On: BlueTeamLabs",
