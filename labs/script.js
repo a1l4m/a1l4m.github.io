@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/inv_HiddenLaunch.png",
+    title: "Hidden Launch",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: MAC",
+      "Difficulty: Medium",
+    ],
+	publishedDate: "24 July 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/HiddenLaunch-#",
+    isVIP: false,
+  },{
 	imageSrc: "./images/inv_forumbreach.png",
     title: "Forum Breach",
     details: [
