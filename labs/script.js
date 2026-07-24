@@ -10,7 +10,7 @@ const gridData = [
     ],
 	publishedDate: "24 July 2026",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/HiddenLaunch-#",
+    buttonLink: "https://blueteamlabs.online/home/investigation/hidden-launch-71aec89191",
     isVIP: false,
   },{
 	imageSrc: "./images/inv_forumbreach.png",
@@ -23,7 +23,7 @@ const gridData = [
     ],
 	publishedDate: "10 July 2026",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/ForumBreach-#",
+    buttonLink: "https://blueteamlabs.online/home/investigation/forum-breach-0049cc2cbe",
     isVIP: false,
   },{
 	imageSrc: "./images/inv_PhantomPixels.png",
@@ -36,7 +36,7 @@ const gridData = [
     ],
 	publishedDate: "26 Jun 2026",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/PhantomPixels-#",
+    buttonLink: "https://blueteamlabs.online/home/investigation/phantom-pixels-d2e576fbaf",
     isVIP: false,
   },{
 	imageSrc: "./images/inv_PoisonAid.png",
@@ -49,7 +49,7 @@ const gridData = [
     ],
 	publishedDate: "12 Jun 2026",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/Poisoned-Aid-#",
+    buttonLink: "https://blueteamlabs.online/home/investigation/poisoned-aid-763dd3e170",
     isVIP: false,
   },{
 	imageSrc: "./images/inv_HammerInTheVault.png",
