@@ -1,5 +1,18 @@
 const gridData = [
     {
+	imageSrc: "./images/inv_renegade.png",
+    title: "Renegade",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: Malware Analysis",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "7 Aug 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/renegade-#",
+    isVIP: false,
+  },{
 	imageSrc: "./images/inv_HiddenLaunch.png",
     title: "Hidden Launch",
     details: [
