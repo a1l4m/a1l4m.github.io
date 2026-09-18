@@ -1,5 +1,44 @@
 const gridData = [
     {
+	imageSrc: "./images/inv_Graphi.png",
+    title: "Graphi",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: Malware Analysis",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "18 Sept 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/graphi-6855145975",
+    isVIP: false,
+  },{
+	imageSrc: "./images/inv_shatteredDream.png",
+    title: "Shattered Dream",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Windows",
+      "Difficulty: Medium",
+    ],
+	publishedDate: "4 Sept 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/shattered-dream-d1f5345d62",
+    isVIP: false,
+  },{
+	imageSrc: "./images/inv_hollowchapter.png",
+    title: "Hollow Chapter",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "21 Aug 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/hollow-chapter-94f43c9277",
+    isVIP: false,
+  },{
 	imageSrc: "./images/inv_renegade.png",
     title: "Renegade",
     details: [
@@ -10,7 +49,7 @@ const gridData = [
     ],
 	publishedDate: "7 Aug 2026",
     buttonText: "Try The Lab",
-    buttonLink: "https://blueteamlabs.online/home/investigation/renegade-#",
+    buttonLink: "https://blueteamlabs.online/home/investigation/renegade-48de0f9c9f",
     isVIP: false,
   },{
 	imageSrc: "./images/inv_HiddenLaunch.png",
