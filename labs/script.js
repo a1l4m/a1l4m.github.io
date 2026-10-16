@@ -1,5 +1,31 @@
 const gridData = [
     {
+	imageSrc: "./images/inv_shotlisted.png",
+    title: "Shortlisted",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: DFIR - Disk",
+      "OS: Windows",
+      "Difficulty: Medium",
+    ],
+	publishedDate: "16 Oct 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/shortlisted-42d848d042",
+    isVIP: false,
+  },{
+	imageSrc: "./images/inv_inherited.png",
+    title: "Inherited",
+    details: [
+      "Published On: BlueTeamLabs",
+      "Type: IR - (WAF,HID,Fabric,DB,Infinity)",
+      "OS: Windows",
+      "Difficulty: Hard",
+    ],
+	publishedDate: "2 Oct 2026",
+    buttonText: "Try The Lab",
+    buttonLink: "https://blueteamlabs.online/home/investigation/inherited-1e00a7e29c",
+    isVIP: false,
+  },{
 	imageSrc: "./images/inv_Graphi.png",
     title: "Graphi",
     details: [
